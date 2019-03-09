@@ -8,5 +8,5 @@ hikalium様のツールを使わせていただきます。
 
 | オリジナルMakefile | hikalium様のMakefile |
 |:---|:---|
-| $(COPY) hoge fuga | $(HARITOL) concat fuga hoge |
+| $(COPY) hoge+fuga piyo | $(HARITOL) concat piyo hoge fuga |
 
