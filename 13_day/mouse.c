@@ -71,8 +71,8 @@ int mouse_decode(struct MOUSE_DEC *mdec, unsigned char dat)
         if ((mdec->buf[0] & 0x20) != 0) {
             mdec->y |= 0xffffff00;
         }
-        mdec->y = -mdec->y;
+        mdec->y = - mdec->y; /* マウスではy方向の符号が画面と反対 */
         return 1;
     }
-    return -1;
+    return -1; /* ここに来ることはないはず */
 }

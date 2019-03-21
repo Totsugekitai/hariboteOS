@@ -8,19 +8,19 @@ struct SHTCTL *shtctl_init(struct MEMMAN *memman, unsigned char *vram, int xsize
 {
     struct SHTCTL *ctl;
     int i;
-    ctl = (struct SHTCTL *) memman_alloc_4k(memman, sizeof(struct SHTCTL));
+    ctl = (struct SHTCTL *) memman_alloc_4k(memman, sizeof (struct SHTCTL));
     if (ctl == 0) {
         goto err;
     }
     ctl->map = (unsigned char *) memman_alloc_4k(memman, xsize * ysize);
     if (ctl->map == 0) {
-        memman_free_4k(memman, (int) ctl, sizeof(struct SHTCTL));
+        memman_free_4k(memman, (int) ctl, sizeof (struct SHTCTL));
         goto err;
     }
     ctl->vram = vram;
     ctl->xsize = xsize;
     ctl->ysize = ysize;
-    ctl->top = -1; /* シートは1枚もない */
+    ctl->top = -1; /* シートは一枚もない */
     for (i = 0; i < MAX_SHEETS; i++) {
         ctl->sheets0[i].flags = 0; /* 未使用マーク */
         ctl->sheets0[i].ctl = ctl; /* 所属を記録 */
@@ -41,7 +41,7 @@ struct SHEET *sheet_alloc(struct SHTCTL *ctl)
             return sht;
         }
     }
-    return 0;  /* 全てのシートが使用中だった */
+    return 0; /* 全てのシートが使用中だった */
 }
 
 void sheet_setbuf(struct SHEET *sht, unsigned char *buf, int xsize, int ysize, int col_inv)
@@ -101,7 +101,7 @@ void sheet_refreshsub(struct SHTCTL *ctl, int vx0, int vy0, int vx1, int vy1, in
         sht = ctl->sheets[h];
         buf = sht->buf;
         sid = sht - ctl->sheets0;
-        /* vx0~vy1を使って、bx0~by1を逆算する */
+        /* vx0〜vy1を使って、bx0〜by1を逆算する */
         bx0 = vx0 - sht->vx0;
         by0 = vy0 - sht->vy0;
         bx1 = vx1 - sht->vx0;
@@ -126,9 +126,9 @@ void sheet_refreshsub(struct SHTCTL *ctl, int vx0, int vy0, int vx1, int vy1, in
 void sheet_updown(struct SHEET *sht, int height)
 {
     struct SHTCTL *ctl = sht->ctl;
-    int h, old = sht->height; /* 指定前の高さを記憶する */
+    int h, old = sht->height; /* 設定前の高さを記憶する */
 
-    /* 指定が高すぎや低すぎだったら、修正する */
+    /* 指定が低すぎや高すぎだったら、修正する */
     if (height > ctl->top + 1) {
         height = ctl->top + 1;
     }
